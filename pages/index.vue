@@ -35,7 +35,6 @@
                  </button>
                </div>
              </div>
-             <div class="font-weight-light text-warning small">*Note that the peers must be connected to the same network.</div>
            </div>
           </div>
         </div>
