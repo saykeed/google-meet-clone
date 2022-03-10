@@ -42,7 +42,7 @@
         <div class="col-lg-6 mt-5 mt-lg-0 text-center text-lg-right">
           <img class="img-fluid"
                src="/images/meet.svg"
-               alt="Get a link you can share" role="img">
+               alt="Get a code you can share" role="img">
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="snackbar" :class="[isShowSnackbar ? 'show': '']">
-    Copied meeting link
+    Copied meeting code
   </div>
 </template>
 
