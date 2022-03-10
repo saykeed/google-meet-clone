@@ -1,6 +1,24 @@
 <template>
-  <div class="body">
-    <div class="main d-flex align-items-center justify-content-center px-3">
+  <div class="meeting">
+    <div class="snackbar" :class="[isShowSnackbar ? 'show': '']">
+      Copied meeting link
+    </div>
+    <div class="audio-container"></div>
+    <div class="overlay " v-if="isShowOverlay">
+      <div class="position-relative">
+        <div @click="closeOverlay" class="position-absolute cursor-pointer close-overlay">
+          <img src="/icons/close_black_24dp.svg" class="img-fluid" alt="">
+        </div>
+      </div>
+      <div class="mb-4 text-18 mt-3 font-weight-light">Your meeting's ready</div>
+      <p class="font-weight-light text-14">You can share this meeting link with others you want in the meeting</p>
+      <div class="overlay-content mb-2 d-flex align-items-center justify-content-between">
+        <div>{{ currentRoom }}</div>
+        <div @click="copyText" class="cursor-pointer"><img src="/icons/content_copy_black_24dp.svg" class="img-fluid"
+                                                           alt=""></div>
+      </div>
+    </div>
+    <div class="main d-flex align-items-center justify-content-center px-4">
       <div class="row videos">
         <div class="col-md-6 mb-3">
           <video id="localVideo" class="embed-responsive-item" muted autoplay playsinline></video>
@@ -14,8 +32,13 @@
     </div>
     <div class="bar px-4 text-white">
       <div class="row ">
-        <div class="col-md-4 d-none d-md-block">
-          9:3PM | {{ currentRoom }}
+        <div class="col-md-4 d-none d-md-flex align-items-center">
+          <div class="pr-2 br-1">
+            {{ currentTime }}
+          </div>
+          <div class="pl-2">
+            {{ currentRoom }}
+          </div>
         </div>
         <div class="col-md-4">
           <div class="d-flex justify-content-center align-items-center">
@@ -43,12 +66,23 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
+
 export default {
-  name: "clone",
+  name: "meet",
   data() {
-    return {}
+    return {
+      dayjs,
+      willPlaySound: true,
+      isShowOverlay: true,
+      isShowSnackbar: false,
+    }
   },
   computed: {
+    currentTime() {
+      let now = Date.now()
+      return dayjs(now).format('HH:mm')
+    },
     currentRoom() {
       return this.$store.getters['room/currentRoom'];
     },
@@ -66,16 +100,41 @@ export default {
     },
   },
   mounted() {
-    this.bindStream();
+    this.attachStream();
+    // this.playSound();
   },
   methods: {
-    bindStream() {
+    closeOverlay() {
+      this.isShowOverlay = false
+    },
+    copyText() {
+      let value = `${window.location.host}${this.currentRoom}`
+      navigator.clipboard.writeText(value);
+      this.isShowSnackbar = true
+      this.isShowOverlay = false
+      setTimeout(() => {
+        this.isShowSnackbar = false
+      }, 40000)
+    },
+    attachStream() {
       document.querySelector('#localVideo').srcObject = this.stream;
       document.querySelector('#remoteVideo').srcObject = this.remoteStream;
       console.log('Stream:', document.querySelector('#localVideo').srcObject);
       console.log(this.roomId)
     },
+    playSound() {
+      const container = document.querySelector('.audio-container')
+      const audio = document.createElement('audio')
+      audio.src = '/join.mp3'
+      container.appendChild(audio)
 
+      document.body.addEventListener('mouseover', () => {
+        audio.play()
+        setTimeout(() => {
+          container.removeChild(audio)
+        }, 5000)
+      })
+    },
     async hangUp(e) {
       const ctx = this;
       const tracks = document.querySelector('#localVideo').srcObject.getTracks();
@@ -119,43 +178,4 @@ export default {
 </script>
 
 <style scoped>
-.main {
-  height: 100vh;
-}
-
-.videos video {
-  border-radius: 10px;
-}
-
-.body {
-  background-color: #202124;
-}
-
-.bar {
-  position: fixed;
-  width: 100vw;
-  height: 80px;
-  bottom: 0;
-  left: 0;
-}
-
-.icon-circle {
-  width: 40px;
-  height: 40px;
-  border-radius: 100px;
-  margin-right: 6px;
-  background-color: #3c4043;
-  cursor: pointer;
-}
-
-.icon-circle img {
-  width: 24px;
-}
-
-.end {
-  background-color: #ea4335;
-  border-radius: 100px;
-  height: 40px;
-  width: 56px;
-}
 </style>
