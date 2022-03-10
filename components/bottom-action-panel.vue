@@ -13,8 +13,8 @@
         <div class="d-flex justify-content-center align-items-center">
           <div @click="$emit('mute')" class="icon-circle d-flex align-items-center justify-content-center">
             <div>
-              <img v-if="isMuted" src="/icons/mic_off_white_24dp.svg" class="img-fluid" alt="">
-              <img v-else src="/icons/mic_white_24dp.svg" class="img-fluid" alt="">
+              <img v-if="isNotMuted" src="/icons/mic_white_24dp.svg" class="img-fluid" alt="">
+              <img v-else src="/icons/mic_off_white_24dp.svg" class="img-fluid" alt="">
             </div>
           </div>
           <div @click="$emit('toggle')" class="icon-circle d-flex align-items-center justify-content-center">
@@ -54,7 +54,7 @@ export default {
     currentRoom() {
       return this.$store.getters['room/currentRoom'];
     },
-    isMuted() {
+    isNotMuted() {
       return this.$store.getters['room/isMute'];
     },
     isVideo() {
