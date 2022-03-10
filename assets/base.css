@@ -14,3 +14,7 @@
 .gray-200 {
   color: #212121;
 }
+.fit-content{
+  width: fit-content;
+  width: -moz-fit-content;
+}

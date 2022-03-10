@@ -11,26 +11,29 @@
             to make it free and available for all.</p>
           <div class="d-md-flex">
             <div class="mr-md-2 text-left mb-2">
-              <button class="btn btn-primary" @click="openUserMediaAndCreate">
+              <button class="btn fit-content btn-primary" @click="openUserMediaAndCreate">
                 <img src="/icons/video_call_white_24dp.svg" class="img-fluid mr-2" alt="">
-                New Meeting
+               New Meeting
               </button>
             </div>
-            <div class="d-flex align-items-center mb-2">
-              <div>
-                <b-input-group class="text-left">
-                  <b-input-group-append>
-                    <img src="/icons/keyboard_black_24dp.svg" class="img-fluid mr-2" alt="">
-                  </b-input-group-append>
-                  <b-input v-model="roomId" autocomplete="off" name="code" type="text"
-                           placeholder="enter a code or link"></b-input>
-                </b-input-group>
-              </div>
-              <div v-if="roomId" class="ml-2">
-                <button  class="btn btn-outline-primary" @click.prevent="openUserMediaAndJoin">Join
-                </button>
-              </div>
-            </div>
+           <div>
+             <div class="d-flex align-items-center mb-2">
+               <div>
+                 <b-input-group class="text-left">
+                   <b-input-group-append>
+                     <img src="/icons/keyboard_black_24dp.svg" class="img-fluid mr-2" alt="">
+                   </b-input-group-append>
+                   <b-input v-model="roomId" autocomplete="off" name="code" type="text"
+                            placeholder="enter a code or link"></b-input>
+                 </b-input-group>
+               </div>
+               <div v-if="roomId" class="ml-2">
+                 <button  class="btn btn-outline-primary" @click.prevent="openUserMediaAndJoin">Join
+                 </button>
+               </div>
+             </div>
+             <div class="font-weight-light small">*Note that the peers must be connected to the same network.</div>
+           </div>
           </div>
         </div>
         <div class="col-md-6 mt-5 mt-md-0 text-md-right">
@@ -123,6 +126,7 @@ export default {
   white-space: nowrap;
   outline: 1px solid transparent !important;
   box-shadow: unset;
+  width: 165px;
 }
 
 .form-control {
