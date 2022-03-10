@@ -27,7 +27,7 @@
                      <img src="/icons/keyboard_black_24dp.svg" class="img-fluid mr-2" alt="">
                    </b-input-group-append>
                    <b-input v-model="roomId" autocomplete="off" name="code" type="text"
-                            placeholder="enter a code or link"></b-input>
+                            placeholder="enter meeting code"></b-input>
                  </b-input-group>
                </div>
                <div v-if="roomId" class="ml-2">
