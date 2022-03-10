@@ -2,6 +2,11 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   ssr: false,
   target: 'server',
+  loadingIndicator: {
+    name: 'circle',
+    color: '#3B8070',
+    background: 'white'
+  },
   head: {
     title: 'google-meet',
     meta: [
@@ -17,12 +22,14 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~/assets/style.css'
+    '~/assets/style.css',
+    '~/assets/responsive.css',
+    '~/assets/override.css',
+    '~/assets/base.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

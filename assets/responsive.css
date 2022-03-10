@@ -1,0 +1,9 @@
+@media all and (max-width: 767px) {
+  .bar {
+    width: 100vw;
+  }
+
+  .overlay {
+    left: 20px;
+  }
+}

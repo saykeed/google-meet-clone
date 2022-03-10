@@ -1,0 +1,14 @@
+.btn.btn-outline-primary {
+  background-color: unset !important;
+}
+
+
+.btn-primary {
+  background-color: #1b72e8 !important;
+}
+
+.form-control:focus, .btn:focus {
+  box-shadow: unset !important;
+  outline: none !important;
+  border-color: inherit !important;
+}

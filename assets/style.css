@@ -1,6 +1,7 @@
+
 body {
   font-family: Roboto, sans-serif;
-  width: 100vh;
+  width: 100vw;
   overflow-x: hidden;
   height: 100%;
 }
@@ -59,21 +60,6 @@ body {
   height: 18px;
 }
 
-.text-14 {
-  font-size: 14px;
-}
-
-.text-18 {
-  font-size: 18px;
-}
-
-.gray-100 {
-  color: #5f6367;
-}
-
-.gray-200 {
-  color: #212121;
-}
 
 .overlay {
   max-width: 90vw;
@@ -86,30 +72,6 @@ body {
   top: 50px;
   width: 360px;
   z-index: 1;
-}
-
-@media all and (max-width: 767px) {
-  .bar {
-    width: 100vw;
-  }
-
-  .btn {
-    width: 100%;
-  }
-
-  .overlay {
-    left: 20px;
-  }
-}
-
-.btn-primary {
-  background-color: #1b72e8 !important;
-}
-
-.form-control:focus, .btn:focus {
-  box-shadow: unset !important;
-  outline: none !important;
-  border-color: inherit !important;
 }
 
 
