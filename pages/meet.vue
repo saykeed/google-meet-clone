@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <bottom-action-panel></bottom-action-panel>
+    <bottom-action-panel @mute="mute" @end="hangUp" @toggle="toggle"></bottom-action-panel>
   </div>
 </template>
 
@@ -39,6 +39,9 @@ export default {
       return this.$store.getters['room/currentRoom'];
     },
     remoteStream() {
+      return this.$store.getters['room/remoteStream'];
+    },
+    localStream() {
       return this.$store.getters['room/remoteStream'];
     },
     peerConnection() {
@@ -62,6 +65,50 @@ export default {
     },
     toggleOverlay(e) {
       this.isShowOverlay = e.value
+    },
+    toggle(){
+      this.$store.commit('room/toggleVideo')
+    },
+    mute(){
+      this.$store.commit('room/toggleMute')
+    },
+    async hangUp(e) {
+      const ctx = this;
+      const tracks = document.querySelector('#localVideo').srcObject.getTracks();
+      tracks.forEach(track => {
+        track.stop();
+      });
+
+      if (ctx.remoteStream) {
+        ctx.remoteStream.getTracks().forEach(track => track.stop());
+      }
+
+      if (ctx.peerConnection) {
+        ctx.peerConnection.close();
+      }
+
+      document.querySelector('#localVideo').srcObject = null;
+      document.querySelector('#remoteVideo').srcObject = null;
+      ctx.$store.commit('room/setCurrentRoomId', null)
+
+      await this.deleteRoom();
+    },
+    async deleteRoom() {
+      const ctx = this;
+      if (ctx.roomId) {
+        await this.$fire.firestoreReady();
+        const roomRef = await this.$fire.firestore.collection('rooms').doc(ctx.roomId)
+        const calleeCandidates = roomRef.collection('calleeCandidates').get();
+        calleeCandidates.forEach(async candidate => {
+          await candidate.ref.delete();
+        });
+        const callerCandidates = roomRef.collection('callerCandidates').get();
+        callerCandidates.forEach(async candidate => {
+          await candidate.ref.delete();
+        });
+        await roomRef.delete();
+      }
+      await this.$router.push('/')
     },
     attachStream() {
       document.querySelector('#localVideo').srcObject = this.stream;

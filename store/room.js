@@ -7,7 +7,9 @@ export const state = () => ({
   stream: null,
   callerCandidatesCollection: null,
   configuration: null,
-  isShowSnackbar: false
+  isShowSnackbar: false,
+  isMute: false,
+  isVideo: true,
 })
 
 
@@ -20,6 +22,8 @@ export const getters = {
   configuration: state => state.configuration,
   stream: state => state.stream,
   isShowSnackbar: state => state.isShowSnackbar,
+  isMute: state => state.isMute,
+  isVideo: state => state.isVideo,
 }
 
 export const mutations = {
@@ -44,9 +48,27 @@ export const mutations = {
   setConfiguration(state, payload) {
     state.configuration = payload.configuration
   },
-  showSnackbar(state, payload){
+  showSnackbar(state, payload) {
     state.isShowSnackbar = payload
-  }
+  },
+  toggleMute(state, payload) {
+    state.localStream.getTracks().forEach(track => {
+      if (track.kind === 'audio') {
+        state.isMute = !state.isMute
+        track.enabled = state.isMute
+        console.log(track)
+      }
+    })
+  },
+  toggleVideo(state, payload) {
+    state.localStream.getTracks().forEach(track => {
+      if (track.kind === 'video') {
+        state.isVideo = !state.isVideo
+        track.enabled = state.isVideo
+        console.log(track)
+      }
+    })
+  },
 }
 
 export const actions = {
