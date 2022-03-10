@@ -9,11 +9,11 @@
     <div class="main d-flex align-items-center justify-content-center px-4">
       <div class="row videos">
         <div class="col-md-6 mb-3">
-          <video id="localVideo" class="embed-responsive-item" muted autoplay playsinline></video>
+          <video id="localVideo" class="img-fluid" muted autoplay playsinline></video>
         </div>
         <div class="col-md-6 mb-3">
 
-          <video id="remoteVideo" class="embed-responsive-item" autoplay playsinline></video>
+          <video id="remoteVideo" class="img-fluid" autoplay playsinline></video>
 
         </div>
       </div>
@@ -51,14 +51,10 @@ export default {
     stream() {
       return this.$store.getters['room/stream'];
     },
-    currentTime() {
-      let now = Date.now()
-      return dayjs(now).format('HH:mm')
-    },
   },
   mounted() {
     this.attachStream();
-    this.playSound();
+    // this.playSound();
   },
   methods: {
     toggleSnackbar(e) {

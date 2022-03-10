@@ -1,6 +1,6 @@
 <template>
   <div class="bar px-4 text-white">
-    <div class="row ">
+    <div class="row d-flex align-items-center ">
       <div class="col-md-4 d-none d-md-flex align-items-center">
         <div class="pr-2 br-1">
           {{ currentTime }}
@@ -44,6 +44,12 @@ export default {
     }
   },
   props: ['currentRoom', 'remoteStream', 'peerConnection', 'roomId', 'stream', 'currentTime' ],
+  computed: {
+    currentTime() {
+      let now = Date.now()
+      return dayjs(now).format('HH:mm')
+    },
+  },
   methods: {
     async hangUp(e) {
       const ctx = this;

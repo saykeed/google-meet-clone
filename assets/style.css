@@ -22,7 +22,7 @@ body {
   position: fixed;
   width: 100vw;
   height: 80px;
-  top: calc(100vh - 80px);
+  bottom:0;
   left: 0;
 }
 
@@ -80,6 +80,9 @@ body {
 
   .btn {
     width: 100%;
+  }
+  .overlay{
+    left: 20px;
   }
 }
 
