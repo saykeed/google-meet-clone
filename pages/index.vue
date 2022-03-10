@@ -16,7 +16,7 @@
                 New Meeting
               </button>
             </div>
-            <div class="d-flex">
+            <div class="d-flex align-items-center mb-2">
               <div>
                 <b-input-group class="text-left">
                   <b-input-group-append>
@@ -120,8 +120,6 @@ export default {
 <style>
 .btn-primary {
   height: 3em;
-  margin-bottom: 1em;
-  margin-right: 1.5em;
   white-space: nowrap;
   outline: 1px solid transparent !important;
   box-shadow: unset;
@@ -129,8 +127,6 @@ export default {
 
 .form-control {
   height: 3em;
-  margin-bottom: 1em;
-  margin-right: 1.5em;
   white-space: nowrap;
   outline: 1px solid transparent !important;
   box-shadow: unset;
@@ -148,5 +144,8 @@ export default {
   height: 48px;
   border-radius: 4px;
   padding: 0 16px;
+}
+.input-group img{
+  width: 24px;
 }
 </style>
