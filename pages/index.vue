@@ -5,10 +5,10 @@
     </div>
     <div class="container pb-5">
       <div class="row align-items-center" style="min-height: 100vh">
-        <div class="col-md-6 mt-5 mt-md-0">
-          <h1 class="hero font-weight-light gray-200 text-center text-md-left">Premium video meetings. Now free for
+        <div class="col-lg-6 mt-5 mt-lg-0">
+          <h1 class="hero font-weight-light gray-200 text-center text-sm-left">Premium video meetings. Now free for
             everyone.</h1>
-          <p class="font-weight-light gray-100 text-18 text-center text-md-left">We re-engineered the service we built
+          <p class="font-weight-light gray-100 text-18 text-center text-sm-left">We re-engineered the service we built
             for secure business meetings, Google
             Meet Clone,
             to make it free and available for all.</p>
@@ -39,7 +39,7 @@
            </div>
           </div>
         </div>
-        <div class="col-md-6 mt-5 mt-md-0 text-md-right">
+        <div class="col-lg-6 mt-5 mt-lg-0 text-center text-lg-right">
           <img class="img-fluid"
                src="/images/meet.svg"
                alt="Get a link you can share" role="img">
