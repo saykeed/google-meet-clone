@@ -19,6 +19,8 @@ body {
 
 .videos video {
   border-radius: 10px;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .bar {
