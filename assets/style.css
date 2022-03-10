@@ -1,6 +1,8 @@
 body {
   font-family: Roboto, sans-serif;
-
+  width: 100vh;
+  overflow-x: hidden;
+  height: 100%;
 }
 
 .main {
@@ -22,7 +24,7 @@ body {
   position: fixed;
   width: 100vw;
   height: 80px;
-  bottom:0;
+  bottom: 0;
   left: 0;
 }
 
@@ -72,6 +74,7 @@ body {
 .gray-200 {
   color: #212121;
 }
+
 .overlay {
   max-width: 90vw;
   padding: 1rem;
@@ -93,7 +96,8 @@ body {
   .btn {
     width: 100%;
   }
-  .overlay{
+
+  .overlay {
     left: 20px;
   }
 }
@@ -107,7 +111,6 @@ body {
   outline: none !important;
   border-color: inherit !important;
 }
-
 
 
 .overlay-content {
