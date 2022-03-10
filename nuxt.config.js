@@ -16,7 +16,14 @@ export default {
       {name: 'format-detection', content: 'telephone=no'}
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
+      {rel: 'preconnect', type: 'image/x-icon', href: 'https://fonts.googleapis.com'},
+      {rel: 'preconnect', type: 'image/x-icon', href: 'https://fonts.gstatic.com', crossOrigin: true},
+      {
+        rel: 'stylesheet',
+        type: 'image/x-icon',
+        href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&family=Rubik:wght@300;400;500;600;700;800;900&display=swap'
+      },
     ]
   },
 

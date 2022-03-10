@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="transition-overlay" v-if="showTransition">
+      <div class="">Joining...</div>
+    </div>
     <div class="container pb-5">
       <div class="row align-items-center" style="min-height: 100vh">
         <div class="col-md-6 mt-5 mt-md-0">
@@ -52,6 +55,7 @@ export default {
   data() {
     return {
       roomId: '',
+      showTransition: false
     }
   },
   computed: {
@@ -71,6 +75,7 @@ export default {
   methods: {
     async openUserMediaAndCreate(e) {
       const ctx = this;
+      ctx.showTransition = true
       const stream = await navigator.mediaDevices.getUserMedia(
         {video: true, audio: true});
       this.$store.commit('room/setStream', stream)
@@ -81,6 +86,7 @@ export default {
     },
     async openUserMediaAndJoin(e) {
       const ctx = this;
+      ctx.showTransition = true
       const stream = await navigator.mediaDevices.getUserMedia(
         {video: true, audio: true});
       this.$store.commit('room/setStream', stream)
@@ -100,6 +106,7 @@ export default {
       if (roomSnapshot.exists) {
         const payload = {roomSnapshot, roomRef, localStream: ctx.localStream}
         await this.$store.dispatch('room/joinRoom', payload)
+        ctx.showTransition = false
         await this.$router.push('/meet')
       }
     },
@@ -114,6 +121,7 @@ export default {
         localStream: ctx.localStream
       }
       await this.$store.dispatch('room/createRoom', payload)
+      ctx.showTransition = false
       await ctx.$router.push('/meet')
     },
 

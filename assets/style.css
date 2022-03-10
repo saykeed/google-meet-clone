@@ -116,3 +116,21 @@ body {
   transform: translateY(-30px);
   transition: transform .4s ease-in-out;
 }
+.transition-overlay{
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  animation-duration: .5s;
+  animation-fill-mode: both;
+  animation-name: transitionOverlayFadeIn;
+  animation-timing-function: linear;
+  background-color: #000;
+  color: #bdc1c6;
+  display: flex;
+  font-size: 2em;
+  top: 0;
+  position: fixed;
+  z-index: 10000;
+  font-weight: 300 !important;
+}
