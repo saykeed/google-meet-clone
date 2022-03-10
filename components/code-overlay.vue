@@ -34,10 +34,10 @@ export default {
     },
     copyText() {
       navigator.clipboard.writeText(this.currentRoom);
-      this.$emit('show-snackbar', true)
+      this.$store.commit('room/showSnackbar', true)
       this.closeOverlay()
       setTimeout(() => {
-        this.$emit('show-snackbar', false)
+        this.$store.commit('room/showSnackbar', false)
       }, 4000)
     },
   }

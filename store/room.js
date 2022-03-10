@@ -6,7 +6,8 @@ export const state = () => ({
   remoteStream: null,
   stream: null,
   callerCandidatesCollection: null,
-  configuration: null
+  configuration: null,
+  isShowSnackbar: false
 })
 
 
@@ -18,6 +19,7 @@ export const getters = {
   remoteStream: state => state.remoteStream,
   configuration: state => state.configuration,
   stream: state => state.stream,
+  isShowSnackbar: state => state.isShowSnackbar,
 }
 
 export const mutations = {
@@ -41,6 +43,9 @@ export const mutations = {
   },
   setConfiguration(state, payload) {
     state.configuration = payload.configuration
+  },
+  showSnackbar(state, payload){
+    state.isShowSnackbar = payload
   }
 }
 

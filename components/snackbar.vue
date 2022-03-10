@@ -1,5 +1,5 @@
 <template>
-  <div class="snackbar" :class="[isShowSnackbar ? 'show': '']">
+  <div class="snackbar small font-weight-light" :class="[isShowSnackbar ? 'show': '']">
     Copied meeting code
   </div>
 </template>
@@ -7,9 +7,9 @@
 <script>
 export default {
   name: "snackbar",
-  props: {
-    isShowSnackbar: {
-      type: Boolean
+  computed: {
+    isShowSnackbar(){
+      return this.$store.getters['room/isShowSnackbar']
     }
   }
 }

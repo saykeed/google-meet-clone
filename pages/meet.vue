@@ -57,6 +57,7 @@ export default {
   },
   methods: {
     toggleSnackbar(e) {
+      console.log(e)
       this.isShowSnackbar = e.value;
     },
     toggleOverlay(e) {
