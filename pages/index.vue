@@ -35,7 +35,7 @@
                  </button>
                </div>
              </div>
-             <div class="font-weight-light small">*Note that the peers must be connected to the same network.</div>
+             <div class="font-weight-light text-warning small">*Note that the peers must be connected to the same network.</div>
            </div>
           </div>
         </div>
@@ -159,5 +159,8 @@ export default {
 }
 .input-group img{
   width: 24px;
+}
+.text-warning{
+  color: #ff4f07 !important;
 }
 </style>
