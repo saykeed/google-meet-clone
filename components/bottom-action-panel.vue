@@ -43,7 +43,7 @@ export default {
       dayjs
     }
   },
-  props: ['remoteStream', 'peerConnection', 'roomId', 'stream', 'currentTime' ],
+  props: ['remoteStream', 'peerConnection', 'roomId', 'stream', ],
   computed: {
     currentTime() {
       let now = Date.now()

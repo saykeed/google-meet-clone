@@ -4,7 +4,8 @@
 
     <snackbar :is-show-snackbar="isShowSnackbar"></snackbar>
 
-    <code-overlay @close="toggleOverlay" @show-snackbar="toggleSnackbar" :is-show-overlay="isShowOverlay"></code-overlay>
+    <code-overlay @close="toggleOverlay" @show-snackbar="toggleSnackbar"
+                  :is-show-overlay="isShowOverlay"></code-overlay>
 
     <div class="main d-flex align-items-center justify-content-center px-4">
       <div class="row videos">
@@ -18,13 +19,11 @@
         </div>
       </div>
     </div>
-    <bottom-action-panel ></bottom-action-panel>
+    <bottom-action-panel></bottom-action-panel>
   </div>
 </template>
 
 <script>
-
-import dayjs from "dayjs";
 
 export default {
   name: "meet",
@@ -71,15 +70,18 @@ export default {
     },
     playSound() {
       const container = document.querySelector('.audio-container')
-      const audio = document.createElement('audio')
+      let audio = document.createElement('audio')
       audio.src = '/join.mp3'
       container.appendChild(audio)
 
       document.body.addEventListener('mouseover', () => {
-        audio.play()
-        setTimeout(() => {
-          container.removeChild(audio)
-        }, 5000)
+        if (audio !== null) {
+          audio.play()
+          setTimeout(() => {
+            container.removeChild(audio)
+            audio = null
+          }, 5000)
+        }
       })
     },
   }
