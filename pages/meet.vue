@@ -95,7 +95,6 @@ export default {
       document.querySelector('#remoteVideo').srcObject = null;
       ctx.$store.commit('room/setCurrentRoomId', null)
 
-      // Delete room on hangup
       await this.deleteRoom();
     },
     async deleteRoom() {

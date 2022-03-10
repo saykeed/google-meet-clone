@@ -35,18 +35,18 @@ export default {
   name: 'IndexPage',
   data() {
     return {
-      roomId: ''
+      roomId: '',
     }
   },
   computed: {
     configuration() {
       return this.$store.getters['room/configuration'];
     },
-    peerConnection() {
-      return this.$store.getters['room/peerConnection'];
-    },
     localStream() {
       return this.$store.getters['room/localStream'];
+    },
+    peerConnection() {
+      return this.$store.getters['room/peerConnection'];
     },
     remoteStream() {
       return this.$store.getters['room/remoteStream'];
@@ -82,8 +82,7 @@ export default {
       console.log('Got room:', roomSnapshot.exists);
 
       if (roomSnapshot.exists) {
-        // console.log('Create peerConnection with configuration: ', ctx.configuration);configuration
-        const payload = {roomSnapshot, roomRef}
+        const payload = {roomSnapshot, roomRef, localStream: ctx.localStream}
         await this.$store.dispatch('room/joinRoom', payload)
         await this.$router.push('/meet')
       }
@@ -94,7 +93,11 @@ export default {
       const roomRef = await this.$fire.firestore.collection('rooms').doc()
       console.log(roomRef)
       console.log('Create ctx.peerConnection with configuration: ', ctx.configuration);
-      await this.$store.dispatch('room/createRoom', roomRef)
+      const payload = {
+        roomRef,
+        localStream: ctx.localStream
+      }
+      await this.$store.dispatch('room/createRoom', payload)
       await ctx.$router.push('/meet')
     },
 

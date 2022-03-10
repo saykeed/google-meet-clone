@@ -33,20 +33,22 @@ export const mutations = {
   setRemoteStream(state, payload) {
     state.remoteStream = payload
   },
-  commitAll(state, payload) {
-    state.remoteStream = payload.remoteStream
-    state.localStream = payload.localStream
+  setPeerConnection(state, payload) {
     state.peerConnection = payload.peerConnection
+  },
+  setCallerCandidatesCollection(state, payload) {
     state.callerCandidatesCollection = payload.callerCandidatesCollection
+  },
+  setConfiguration(state, payload) {
     state.configuration = payload.configuration
   }
 }
 
 export const actions = {
-  async createRoom({commit, state, dispatch}, roomRef) {
+  async createRoom(context, payload) {
     let peerConnection = null
-    let localStream = state.localStream
-    let remoteStream = null
+    let localStream = payload.localStream
+    let remoteStream = new MediaStream()
     let callerCandidatesCollection = null
     let configuration = {
       iceServers: [
@@ -60,13 +62,11 @@ export const actions = {
       iceCandidatePoolSize: 10,
     }
     peerConnection = new RTCPeerConnection(configuration)
-    // dispatch('registerPeerConnectionListeners')
     localStream.getTracks().forEach(track => {
       peerConnection.addTrack(track, localStream);
     });
 
-    // Code for collecting ICE candidates below
-    callerCandidatesCollection = roomRef.collection('callerCandidates');
+    callerCandidatesCollection = payload.roomRef.collection('callerCandidates');
 
     peerConnection.addEventListener('icecandidate', event => {
       if (!event.candidate) {
@@ -76,9 +76,6 @@ export const actions = {
       console.log('Got candidate: ', event.candidate);
       callerCandidatesCollection.add(event.candidate.toJSON());
     });
-    // Code for collecting ICE candidates above
-
-    // Code for creating a room below
     const offer = await peerConnection.createOffer();
     await peerConnection.setLocalDescription(offer);
     console.log('Created offer:', offer);
@@ -89,9 +86,9 @@ export const actions = {
         sdp: offer.sdp,
       },
     };
-    await roomRef.set(roomWithOffer);
-    commit('setCurrentRoomId', roomRef.id)
-    console.log(`New room created with SDP offer. Room ID: ${roomRef.id}`);
+    await payload.roomRef.set(roomWithOffer);
+    context.commit('setCurrentRoomId', payload.roomRef.id)
+    console.log(`New room created with SDP offer. Room ID: ${payload.roomRef.id}`);
 
     peerConnection.addEventListener('track', event => {
       console.log('Got remote track:', event.streams[0]);
@@ -101,8 +98,7 @@ export const actions = {
       });
     });
 
-    // Listening for remote session description below
-    roomRef.onSnapshot(async snapshot => {
+    payload.roomRef.onSnapshot(async snapshot => {
       const data = snapshot.data();
       if (!peerConnection.currentRemoteDescription && data && data.answer) {
         console.log('Got remote description: ', data.answer);
@@ -110,10 +106,7 @@ export const actions = {
         await peerConnection.setRemoteDescription(rtcSessionDescription);
       }
     });
-    // Listening for remote session description above
-
-    // Listen for remote ICE candidates below
-    roomRef.collection('calleeCandidates').onSnapshot(snapshot => {
+    payload.roomRef.collection('calleeCandidates').onSnapshot(snapshot => {
       snapshot.docChanges().forEach(async change => {
         if (change.type === 'added') {
           let data = change.doc.data();
@@ -122,20 +115,18 @@ export const actions = {
         }
       });
     });
-    const payload = {
-      peerConnection,
-      localStream,
-      remoteStream,
-      callerCandidatesCollection,
-    }
 
-    commit('commitAll', payload)
+
+    context.commit('setPeerConnection', peerConnection)
+    context.commit('setLocalStream', localStream)
+    context.commit('setRemoteStream', remoteStream)
+    context.commit('setCallerCandidatesCollection', callerCandidatesCollection)
+    context.commit('setConfiguration', configuration)
   },
-  async joinRoom({commit, state}, payload) {
+  async joinRoom(context, payload) {
     let peerConnection = null
-    let localStream = state.localStream
-    let remoteStream = null
-    let callerCandidatesCollection = null
+    let localStream = payload.localStream
+    let remoteStream = new MediaStream()
     let configuration = {
       iceServers: [
         {
@@ -148,12 +139,10 @@ export const actions = {
       iceCandidatePoolSize: 10,
     }
     peerConnection = new RTCPeerConnection(configuration)
-    // await this.$store.dispatch('room/registerPeerConnectionListeners')
     localStream.getTracks().forEach(track => {
       peerConnection.addTrack(track, localStream);
     });
 
-    // Code for collecting ICE candidates below
     const calleeCandidatesCollection = payload.roomRef.collection('calleeCandidates');
     peerConnection.addEventListener('icecandidate', event => {
       if (!event.candidate) {
@@ -163,7 +152,6 @@ export const actions = {
       console.log('Got candidate: ', event.candidate);
       calleeCandidatesCollection.add(event.candidate.toJSON());
     });
-    // Code for collecting ICE candidates above
     peerConnection.addEventListener('track', event => {
       console.log('Got remote track:', event.streams[0]);
       event.streams[0].getTracks().forEach(track => {
@@ -172,8 +160,6 @@ export const actions = {
       });
     });
 
-
-    // Code for creating SDP answer below
     const offer = payload.roomSnapshot.data().offer;
     console.log('Got offer:', offer);
     await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
@@ -188,9 +174,6 @@ export const actions = {
       },
     };
     await payload.roomRef.update(roomWithAnswer);
-    // Code for creating SDP answer above
-
-    // Listening for remote ICE candidates below
     payload.roomRef.collection('callerCandidates').onSnapshot(snapshot => {
       snapshot.docChanges().forEach(async change => {
         if (change.type === 'added') {
@@ -200,32 +183,9 @@ export const actions = {
         }
       });
     });
-    const data = {
-      peerConnection,
-      localStream,
-      remoteStream,
-      callerCandidatesCollection,
-    }
-
-    commit('commitAll', data)
+    context.commit('setPeerConnection', peerConnection)
+    context.commit('setLocalStream', localStream)
+    context.commit('setRemoteStream', remoteStream)
+    context.commit('setConfiguration', configuration)
   },
-  registerPeerConnectionListeners({state, commit}) {
-    // state.peerConnection.addEventListener('icegatheringstatechange', () => {
-    //   console.log(
-    //     `ICE gathering state changed: ${state.peerConnection.iceGatheringState}`);
-    // });
-    //
-    // state.peerConnection.addEventListener('connectionstatechange', () => {
-    //   console.log(`Connection state change: ${state.peerConnection.connectionState}`);
-    // });
-    //
-    // state.peerConnection.addEventListener('signalingstatechange', () => {
-    //   console.log(`Signaling state change: ${state.peerConnection.signalingState}`);
-    // });
-    //
-    // state.peerConnection.addEventListener('iceconnectionstatechange ', () => {
-    //   console.log(
-    //     `ICE connection state change: ${state.peerConnection.iceConnectionState}`);
-    // });
-  }
 }
