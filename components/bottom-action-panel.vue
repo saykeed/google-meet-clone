@@ -43,11 +43,14 @@ export default {
       dayjs
     }
   },
-  props: ['currentRoom', 'remoteStream', 'peerConnection', 'roomId', 'stream', 'currentTime' ],
+  props: ['remoteStream', 'peerConnection', 'roomId', 'stream', 'currentTime' ],
   computed: {
     currentTime() {
       let now = Date.now()
       return dayjs(now).format('HH:mm')
+    },
+    currentRoom() {
+      return this.$store.getters['room/currentRoom'];
     },
   },
   methods: {

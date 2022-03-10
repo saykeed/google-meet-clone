@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="mb-4 text-18 mt-3 font-weight-light">Your meeting's ready</div>
-    <p class="font-weight-light text-14">You can share this meeting link with others you want in the meeting</p>
+    <p class="font-weight-light text-14">You can share this meeting code with others you want in the meeting</p>
     <div class="overlay-content mb-2 d-flex align-items-center justify-content-between">
       <div>{{ currentRoom }}</div>
       <div @click="copyText" class="cursor-pointer"><img src="/icons/content_copy_black_24dp.svg" class="img-fluid"
