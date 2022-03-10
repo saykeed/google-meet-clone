@@ -10,7 +10,7 @@
             everyone.</h1>
           <p class="font-weight-light gray-100 text-18 text-center text-md-left">We re-engineered the service we built
             for secure business meetings, Google
-            Meet,
+            Meet Clone,
             to make it free and available for all.</p>
           <div class="d-md-flex">
             <div class="mr-md-2 text-left mb-2">
