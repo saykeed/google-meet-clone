@@ -149,13 +149,13 @@ export const actions = {
       }
     });
     payload.roomRef.collection('calleeCandidates').onSnapshot(snapshot => {
-      snapshot.docChanges().forEach(async change => {
-        if (change.type === 'added') {
-          let data = change.doc.data();
-          console.log(`Got new remote ICE candidate: ${JSON.stringify(data)}`);
-          await peerConnection.addIceCandidate(new RTCIceCandidate(data));
-        }
-      });
+		snapshot.docChanges().forEach(async change => {
+			if (change.type === 'added') {
+			let data = change.doc.data();
+			console.log(`Got new remote ICE candidate: ${JSON.stringify(data)}`);
+			await peerConnection.addIceCandidate(new RTCIceCandidate(data));
+			}
+		});
     });
 
 
